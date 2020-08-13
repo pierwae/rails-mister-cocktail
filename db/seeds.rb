@@ -8,18 +8,45 @@
 
 require 'json'
 require 'open-uri'
+require 'csv'
 
-puts 'Loading ingredients data...'
+puts '[1/3] Cleaning everything...'
+
+Cocktail.all.each do |cocktail|
+  cocktail.destroy
+end
+
+Dose.all.each do |dose|
+  dose.destroy
+end
+
+Ingredient.all.each do |ingredient|
+  ingredient.destroy
+end
+
+puts '[1/3] Finished!'
+
+puts '[2/3] Loading ingredients data...'
 
 url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
 serialized_drinks = open(url).read
 drinks = JSON.parse(serialized_drinks)
 
-puts 'Creating a lot of ingredients...'
+puts '[2/3] Creating a lot of ingredients...'
 
 drinks['drinks'].each do |drink|
   Ingredient.create(name: drink['strIngredient1'])
-  # puts drink['strIngredient1']
 end
 
-puts 'Finished!'
+puts '[2/3] Finished!'
+
+puts '[3/3] Creating 18 fake cocktails...'
+
+csv_options = { col_sep: ',', quote_char: "'" }
+filepath    = '/Users/pierrewaechter/code/pierwae/rails-mister-cocktail/db/data_seeds.csv'
+
+CSV.foreach(filepath, csv_options) do |row|
+  Cocktail.create(name: row[0], picture: row[1])
+end
+
+puts '[3/3] Finished!'

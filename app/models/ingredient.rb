@@ -1,4 +1,6 @@
 class Ingredient < ApplicationRecord
+  INGREDIENTS = Ingredient.all
+
   has_many :doses
   validates :name, presence: true, uniqueness: true
   before_destroy :can_be_destroyed?

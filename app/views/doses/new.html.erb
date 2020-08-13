@@ -1,11 +1,12 @@
+<div class='container p-5'>
+  <%= simple_form_for [@cocktail, @dose] do |f| %>
+    <%= f.error_notification %>
 
+    <%= f.input :description %>
 
-<%= simple_form_for [@cocktail, @dose] do |f| %>
-  <%= f.error_notification %>
+    <%= f.input :ingredient_id, collection: Ingredient::INGREDIENTS  %>
 
-  <%= f.input :description %>
+    <%= f.button :submit, class: 'btn-primary' %>
+  <% end %>
+</div>
 
-  <%= f.input :ingredient_id, collection: Ingredient::INGREDIENTS  %>
-
-  <%= f.button :submit, class: 'btn-primary' %>
-<% end %>

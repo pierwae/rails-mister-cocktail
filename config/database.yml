@@ -78,8 +78,12 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+# production:
+#   <<: *default
+#   database: rails_mister_cocktail_production
+#   username: rails_mister_cocktail
+#   password: <%= ENV['RAILS_MISTER_COCKTAIL_DATABASE_PASSWORD'] %>
+
 production:
   <<: *default
-  database: rails_mister_cocktail_production
-  username: rails_mister_cocktail
-  password: <%= ENV['RAILS_MISTER_COCKTAIL_DATABASE_PASSWORD'] %>
+  url: <%= ENV['POSTGRESQL_ADDON_URI'] %>
